@@ -71,7 +71,8 @@ ________________________________________________________
         else:
             if count is 0:
                 break
-            
+
+            # make a float and push into storages
             num = float(entry)
             filtered_flow.append(num)
             unique_entries.add(num)
@@ -83,7 +84,8 @@ ________________________________________________________
     if warning_triggered:
         print("Попередження: у вхідному масиві наявні некоректні значення",
               "Їх автоматично буде видалено")
-        
+
+    # checks if concrete number is given
     if count is None:
         print("Кількість унікальних елементів у масиві", len(unique_entries))
     else:
