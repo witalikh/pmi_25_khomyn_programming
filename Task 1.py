@@ -1,95 +1,180 @@
-def is_float(entry:str) -> bool:
-    """ Checks if the string can be converted into float """
-    
-    try:
-        float(entry)
-        return True
-    except:
-        return False
+class ImmediateExit(Exception):
+    """ Custom exception for immediate program break """
+    pass
 
-def int_or_none(entry:str):
-    """Converts string into integer if possible
-    Else returnss None"""
 
-    try:
-        return int(entry)
-    except:
-        return None
+def quick_sort(arr: list):
+    """
+    Quicksort algorithm implementation
+    :param arr: list to be sorted (stays immutable)
+    :return: sorted list
+    """
+
+    length = len(arr)
+
+    # nothing to sort
+    if length <= 1:
+        return arr
+
+    # split list by pivot
+    else:
+        pivot = arr[length // 2]
+        lesser, equal, greater = [], [], []
+
+        # TypeError can be raised if elements are incomparable
+        for i in range(length):
+            if arr[i] < pivot:
+                lesser.append(arr[i])
+            elif arr[i] == pivot:
+                equal.append(arr[i])
+            else:
+                greater.append(arr[i])
+
+        # sort sub-lists and return sorted
+        return quick_sort(lesser) + equal + quick_sort(greater)
+
+
+# main code of this task
+# complexity in average is O(n*log(n) + n)
+def count_unique(arr: list) -> int:
+    """
+    Counting unique elements
+    """
+
+    # if arr is empty
+    if not arr:
+        return 0
+    else:
+        # sorting arr
+        sorted_arr = quick_sort(arr)
+
+        # first element is already unique
+        counter = 1
+
+        # comparing current slot with previous to find uniques
+        for i in range(1, len(sorted_arr)):
+            if sorted_arr[i - 1] != sorted_arr[i]:
+                counter += 1
+
+        return counter
+
+
+def try_to_input(required_type,
+                 entry_msg, wrong_entry_msg,
+                 stop_words):
+    """
+    Function that handles perpetual input until entering correct format
+    """
+    while True:
+        # enter a value
+        entry = input(entry_msg)
+
+        # if we decide to close program beforehand
+        if entry.lower() in stop_words:
+            raise ImmediateExit
+
+        try:
+            # try to convert
+            output = required_type(entry)
+
+        except ValueError:
+            # wrong format -> ask to rewrite
+            print(wrong_entry_msg)
+            continue
+
+        else:
+            # right format -> return
+            return output
+
+
+def list_input_manage(greeting_msg,
+                      size_input_msg, elem_input_msg,
+                      wrong_size_value_msg,
+                      wrong_size_format_msg, wrong_elem_format_msg,
+                      stop_words):
+    """
+    Function that handles array(list) input and returns formatted list
+    """
+
+    # greeting message
+    print(greeting_msg)
+
+    # getting list size
+    size = try_to_input(int, size_input_msg, wrong_size_format_msg, stop_words)
+
+    if size < 0:
+        print(wrong_size_value_msg)
+        raise ImmediateExit
+
+    else:
+        arr = []
+
+        print(elem_input_msg)
+        for i in range(size):
+            counter_msg = f"[{i + 1}]: "
+            arr.append(try_to_input(float, counter_msg, wrong_elem_format_msg, stop_words))
+
+        return arr
+
 
 def main():
     """ Main function of the program """
-    
-    greeting = """
-_______________________________________________________________________
-Доброго дня!
-Ця програма рахує кількість унікальних значень у вхідній послідовності
-Серед n перших значень
-Зокрема, для вхідної послідовності [3.14, -4.5, 3.3, 3.3, 3.14, 4, ...]
-при n = 5 така кількість дорівнюватиме 3
-_______________________________________________________________________
-"""
 
-    list_input_instructions = """
-Введіть масив дійсних значень через пробіл           
-Приклад: 3.14 4 -3.777 4.4 4.4 3.14 -128             
-Зауважимо, що числа некоректного формату ігноруються!
-______________________________________________________
+    greeting_msg = """
+    Ця програма рахує кількість унікальних значень у вхідній послідовності
+    Зокрема, для вхідної послідовності [3.14, -4.5, 3.3, 3.3, 3.14, 4]
+    така кількість дорівнюватиме 4
+    Щоб вийти передчасно, введіть EXIT в довільному регістрі.
+    """
 
-"""
+    size_input_msg = """
+    Введіть кількість елементів у послідовності (ціле число)
+    """
 
-    n_input_instructions = """
-Введіть кількість перших членів послідовності          
-Серед яких необхідно знайти кількість унікальних членів
-Введіть all (або довільний некоректний формат)
-щоб проаналізувати всі числа
-________________________________________________________
+    elem_input_msg = """
+    Введіть послідовність дійсних значень ПОЕЛЕМЕНТНО через ENTER                     
+    Будь-ласка, введіть ціле число або EXIT (в довільному регістрі) щоб вийти.
+    """
 
-"""
-    
-    print(greeting)
+    wrong_size_value_msg = """
+    Введене Вами число чисто технічно є цілим числом, однак масивів такого розміру,
+    на жаль, ми ще не навчились підтримувати :)
+    """
 
-    # input values storage (list(str)) and int
-    input_flow = input(list_input_instructions).split()
-    n = input(n_input_instructions)
+    wrong_size_input_msg = """
+    Введено некоректний формат для розміру масиву. 
+    Будь-ласка, введіть ціле число або EXIT (в довільному регістрі) щоб вийти.
+    """
 
-    # read n as integer or None
-    count = int_or_none(n)
+    wrong_elem_input_msg = """
+    Введено некоректний формат для розміру масиву. 
+    Будь-ласка, введіть ціле або дійсне число, або EXIT (в довільному регістрі) щоб вийти.
+    """
 
-    # filtered list and set of input
-    filtered_flow = []
-    unique_entries = set()
-    
-    # checks if at least one entry is incorrect
-    warning_triggered = False
+    output_msg = "В даному вхідному масиві виявлено таку кількість унікальних елементів: "
 
-    
-    # loop filtering float from anything else
-    for entry in input_flow:
-        if not is_float(entry):
-            warning_triggered = True
-            continue
-        else:
-            if count is 0:
-                break
+    exit_msg = """
+    Програма завершує свою роботу. Дякую за увагу!
+    """
 
-            # make a float and push into storages
-            num = float(entry)
-            filtered_flow.append(num)
-            unique_entries.add(num)
+    stop_words = ["exit"]
 
-            if count:
-                count -= 1
+    try:
+        # obtaining array with function
+        arr = list_input_manage(greeting_msg,
+                                size_input_msg, elem_input_msg,
+                                wrong_size_value_msg,
+                                wrong_size_input_msg, wrong_elem_input_msg,
+                                stop_words)
 
-    # print warning about incorrect input
-    if warning_triggered:
-        print("Попередження: у вхідному масиві наявні некоректні значення",
-              "Їх автоматично буде видалено")
+    except ImmediateExit:
+        # user wants go out, let him free
+        print(exit_msg)
 
-    # checks if concrete number is given
-    if count is None:
-        print("Кількість унікальних елементів у масиві", len(unique_entries))
     else:
-        print("Кількість унікальних елементів у масиві серед перших", int(n) - count, ":", len(unique_entries))
-        
+        # printing results
+        print(output_msg, count_unique(arr))
+
+
 if __name__ == "__main__":
     main()
