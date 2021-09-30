@@ -13,6 +13,18 @@ class Globals:
         """ Forbid creating instances of this class """
         return None
 
+    # certificate_output
+    cert_sep = "-" * 50
+    cert_fancy_keywords = {
+        "identifier": "Covid Certificate ID",
+        "username": "Full name",
+        "international_passport": "Passport code",
+        "start_date": "issue date",
+        "end_date": "Expire date",
+        "date_of_birth": "Date of birth",
+        "vaccine": "Vaccine"
+    }
+
     # name parameters
     min_words_in_name = 2
     max_words_in_name = 3

@@ -5,6 +5,8 @@ Main file. Implementation of CovidCertificate and its container
 from covid_validate import CertError, CertificateValidation
 from algorithms import quick_sort
 
+from settings import Globals
+
 
 class CovidCertificate:
 
@@ -30,16 +32,16 @@ class CovidCertificate:
         self.vaccine = vaccine
 
     def __str__(self):
-        return f"--------------------------------------------------------\n" \
-               f"INTERNATIONAL CERTIFICATE OF VACCINATION AND PROPHYLAXIS\n" \
-               f"Universal identifier: {self.identifier}\n" \
-               f"Full name: {self.username}\n" \
-               f"Date of birth: {str(self.date_of_birth)}\n" \
-               f"International passport record: {self.international_passport}\n" \
-               f"Vaccine: {self.vaccine}\n" \
-               f"Certificate valid from {str(self.start_date)}\n" \
-               f"                    to {str(self.end_date)}\n" \
-               f"---------------------------------------------------------"
+        """
+        Dunder method of fancy string representation
+        :return: fancy string
+        """
+        result = Globals.cert_sep + '\n'
+        for key, value in self.__dict__.items():
+            result += Globals.cert_fancy_keywords[key] + ': ' + value + "\n"
+
+        result += Globals.cert_sep
+        return result
 
     # overloading **unpack
 
