@@ -97,12 +97,18 @@ class FileManager:
                     elif line.startswith("--") and scanning:
                         # convert to class object if possible
                         if cls is not None:
-                            result.append(cls(**kwargs))
+                            # sometimes it impossible to convert
+                            try:
+                                result.append(cls(**kwargs))
 
+                            # so let pass it out
+                            except:
+                                pass
                         else:
                             result.append(kwargs)
 
                         # record reading is finished
+                        kwargs.clear()
                         scanning = False
 
                     # if record scanning is going on
