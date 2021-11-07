@@ -70,7 +70,10 @@ class Validators:
             self.type = _type
 
         def __call__(self, curr):
-            typed_curr = self.type(curr)
+            try:
+                typed_curr = self.type(curr)
+            except (ValueError, TypeError):
+                raise ValidationError
 
             if self.prev is not None and self.prev > typed_curr:
                 raise ValidationError

@@ -1,0 +1,26 @@
+[
+    {
+        "avia_company": "SkyUp",
+        "number_of_people": 23,
+        "start_time": "13:30",
+        "end_time": "14:30",
+        "date": "2021-11-05",
+        "flight_number": "xx1111"
+    },
+    {
+        "avia_company": "SkyUp",
+        "number_of_people": 263,
+        "start_time": "13:30",
+        "end_time": "14:30",
+        "date": "2021-11-05",
+        "flight_number": "xx1211"
+    },
+    {
+        "avia_company": "SkyUp",
+        "number_of_people": 123,
+        "start_time": "13:30",
+        "end_time": "14:30",
+        "date": "2021-11-05",
+        "flight_number": "xx1311"
+    }
+]
