@@ -1,0 +1,50 @@
+[
+    {
+        "avia_company": "Wizzair",
+        "number_of_people": 256,
+        "start_time": "11:30",
+        "end_time": "12:50",
+        "date": "2021-11-15",
+        "flight_number": "ff0000"
+    },
+    {
+        "avia_company": "Wizzair",
+        "number_of_people": 246,
+        "start_time": "10:30",
+        "end_time": "11:15",
+        "date": "2021-11-15",
+        "flight_number": "ff0000"
+    },
+    {
+        "avia_company": "Ryanair",
+        "number_of_people": 246,
+        "start_time": "10:30",
+        "end_time": "11:15",
+        "date": "2021-11-15",
+        "flight_number": "ff0000"
+    },
+    {
+        "avia_company": "SkyUp",
+        "number_of_people": 23,
+        "start_time": "13:30",
+        "end_time": "14:30",
+        "date": "2021-11-05",
+        "flight_number": "xx1111"
+    },
+    {
+        "avia_company": "SkyUp",
+        "number_of_people": 263,
+        "start_time": "13:30",
+        "end_time": "14:30",
+        "date": "2021-11-05",
+        "flight_number": "xx1211"
+    },
+    {
+        "avia_company": "SkyUp",
+        "number_of_people": 123,
+        "start_time": "13:30",
+        "end_time": "14:30",
+        "date": "2021-11-05",
+        "flight_number": "xx1311"
+    }
+]
