@@ -1,0 +1,47 @@
+[
+  {
+    "identifier": "Very special person",
+    "username": "XAE20 UIF",
+    "international_passport": "",
+    "date_of_birth": "30.02.1980",
+    "start_date": "31.11.2020",
+    "end_date": "3.09.21",
+    "vaccine": "$absent-vaccine"
+  },
+  {
+    "identifier": "0",
+    "username": "Jane Doe",
+    "international_passport": "aA000000",
+    "date_of_birth": "29.02.1860",
+    "start_date": "29.02.2020",
+    "end_date": "28.02.2019",
+    "vaccine": "Pfizer"
+  },
+  {
+    "identifier": "",
+    "username": "",
+    "international_passport": "",
+    "date_of_birth": "31/07/1970",
+    "start_date": "01/01/2021",
+    "end_date": "01.01.2022",
+    "vaccine": ""
+  },
+  {
+    "identifier": "00",
+    "username": "John John",
+    "international_passport": "aa000000",
+    "date_of_birth": "31.07.1970",
+    "start_date": "01.01.1969",
+    "end_date": "01.01.2022",
+    "vaccine": "Pfizer"
+  },
+  {
+    "identifier": "000",
+    "username": "Jane Jane Jane",
+    "international_passport": "zz999999",
+    "date_of_birth": "31.08.2021",
+    "start_date": "01.01.2021",
+    "end_date": "01.01.2022",
+    "vaccine": "Pfizer"
+  }
+]

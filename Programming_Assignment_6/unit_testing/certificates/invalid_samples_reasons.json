@@ -1,0 +1,30 @@
+[
+  [
+    "InvalidIdentifier",
+    "InvalidName",
+    "InvalidPassport",
+    "InvalidStartDateFormat",
+    "InvalidEndDateFormat",
+    "InvalidBirthDateFormat",
+    "InvalidVaccine"
+  ],
+  [
+    "TooOldAge",
+    "InvalidEndDate"
+  ],
+  [
+    "InvalidIdentifier",
+    "InvalidName",
+    "InvalidPassport",
+    "InvalidStartDateFormat",
+    "InvalidBirthDateFormat",
+    "InvalidVaccine"
+  ],
+  [
+    "InvalidStartDate"
+  ],
+  [
+    "TooYoungAge",
+    "InvalidStartDate"
+  ]
+]

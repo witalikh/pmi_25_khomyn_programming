@@ -1,0 +1,38 @@
+[
+  {
+    "identifier": "0000",
+    "username": "John Doe",
+    "international_passport": "AA000000",
+    "date_of_birth": "01.01.1980",
+    "start_date": "01.01.2021",
+    "end_date": "01.01.2022",
+    "vaccine": "Pfizer"
+  },
+  {
+    "identifier": "00000000",
+    "username": "Jane Doe",
+    "international_passport": "aa999999",
+    "date_of_birth": "29.02.2000",
+    "start_date": "29.02.2020",
+    "end_date": "28.02.2021",
+    "vaccine": "Moderna"
+  },
+  {
+    "identifier": "0",
+    "username": "The Head DiReCTor",
+    "international_passport": "Aa000000",
+    "date_of_birth": "31.07.1970",
+    "start_date": "01.01.2021",
+    "end_date": "01.01.2022",
+    "vaccine": "Pfizer"
+  },
+  {
+    "identifier": "0",
+    "username": "Aaron Doe",
+    "international_passport": "AB000000",
+    "date_of_birth": "31.07.1970",
+    "start_date": "01.01.2021",
+    "end_date": "01.01.2022",
+    "vaccine": "Pfizer"
+  }
+]
