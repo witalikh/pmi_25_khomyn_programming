@@ -6,16 +6,14 @@ from .models import User
 
 class RegistrationSerializer(serializers.ModelSerializer):
 
-    password = serializers.CharField(
-        max_length=128,
-        min_length=8,
-        write_only=True
-    )
-    token = serializers.CharField(max_length=255, read_only=True)
-
     class Meta:
         model = User
-        fields = ['email', 'first_name', 'last_name', 'password', 'token']
+        fields = ['email', 'first_name', 'last_name', 'password', 'token', 'refresh_token']
+        read_only_fields = ['token', 'refresh_token']
+
+        extra_kwargs = {
+            "password": {"write_only": True, }
+        }
 
     def create(self, validated_data):
         return User.objects.create_user(**validated_data)
@@ -29,7 +27,9 @@ class LoginSerializer(serializers.Serializer):
 
     email = serializers.CharField(max_length=255)
     password = serializers.CharField(max_length=128, write_only=True)
+
     token = serializers.CharField(max_length=255, read_only=True)
+    refresh_token = serializers.CharField(max_length=255, read_only=True)
 
     def validate(self, data):
         """
@@ -64,5 +64,6 @@ class LoginSerializer(serializers.Serializer):
                 'email': user.email,
                 'first_name': user.first_name,
                 'last_name': user.last_name,
-                'token': user.token
+                'token': user.token,
+                'refresh_token': user.refresh_token,
             }

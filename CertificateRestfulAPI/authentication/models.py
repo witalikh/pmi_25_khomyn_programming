@@ -17,6 +17,9 @@ class ModelConsts:
 
     WORD_VALIDATOR = ValidateName(1, 2, BAD_NAME)
 
+    EXPIRE_ACCESS = 300
+    EXPIRE_REFRESH = 600
+
 
 class Roles(Enum):
     """
@@ -61,23 +64,24 @@ class User(AbstractBaseUser, PermissionsMixin):
     def is_admin(self):
         return self.role < 1
 
-    #@property
-    #def is_superuser(self):
-        #return self.role < 1
-
     @property
     def token(self):
         """ Generate new token basing on current datetime """
-        return self._generate_jwt_token()
+        return self._generate_jwt_token("access", ModelConsts.EXPIRE_ACCESS)
 
-    def _generate_jwt_token(self):
+    @property
+    def refresh_token(self):
+        """ Generate new token for refreshing old tokens """
+        return self._generate_jwt_token("refresh", ModelConsts.EXPIRE_REFRESH)
+
+    def _generate_jwt_token(self, token_type: str, expire: int):
         """ Private method for generating jwt-token """
-        dt = datetime.now() + timedelta(days=1)
+        dt = datetime.now() + timedelta(seconds=expire)
 
         token = jwt.encode({
+            'token_type': token_type,
             'id': self.pk,
             'exp': dt.timestamp()
         }, settings.SECRET_KEY, algorithm='HS256')
 
         return token.decode('utf-8')
-

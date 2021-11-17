@@ -35,6 +35,15 @@ class SwaggerDocDicts:
         ]
     }
 
+    REFRESH_SUCCESS = {
+        "token": "valid access token",
+        "refresh_token": "valid refresh token"
+    }
+
+    REFRESH_FAIL = {
+        "detail": "reason of fail"
+    }
+
     REGISTER_PARAMETER = openapi.Schema(
         type=openapi.TYPE_OBJECT,
         properties={
@@ -63,12 +72,20 @@ class SwaggerDocDicts:
                                        max_length=128),
         })
 
+    REFRESH_PARAMETER = openapi.Schema(
+        type=openapi.TYPE_OBJECT,
+        properties={
+            "refresh_token": openapi.Schema(type=openapi.TYPE_STRING,
+                                            description='valid refresh token',
+                                            max_length=255),
+        })
+
 
 class EndpointDocs:
 
     LOGIN = {
         "request_body": SwaggerDocDicts.LOGIN_PARAMETER,
-        "operation_description": "Insert new CovidCertificate into a database",
+        "operation_description": "Login and generate jwt token",
         "responses": {
             "200": openapi.Response(
                 description="Valid data => login (generate JWT)",
@@ -87,7 +104,7 @@ class EndpointDocs:
 
     REGISTER = {
         "request_body": SwaggerDocDicts.REGISTER_PARAMETER,
-        "operation_description": "Edit CovidCertificate record by ID in database",
+        "operation_description": "Register new user and login (obtain new jwt token)",
         "responses": {
             "201": openapi.Response(
                 description="Valid data, unique email => register + JWT",
@@ -99,6 +116,25 @@ class EndpointDocs:
                 description="Invalid input parameters = no registration",
                 examples={
                     "application/json": SwaggerDocDicts.REGISTER_FAIL
+                }
+            ),
+        }
+    }
+
+    REFRESH = {
+        "request_body": SwaggerDocDicts.REFRESH_PARAMETER,
+        "operation_description": "Refresh token by given refresh token",
+        "responses": {
+            "201": openapi.Response(
+                description="Valid data, unique email => register + JWT",
+                examples={
+                    "application/json": SwaggerDocDicts.REFRESH_SUCCESS
+                }
+            ),
+            "403": openapi.Response(
+                description="Invalid input parameters = no registration",
+                examples={
+                    "application/json": SwaggerDocDicts.REFRESH_FAIL
                 }
             ),
         }

@@ -1,9 +1,5 @@
-from django.conf import settings
 from rest_framework import authentication, exceptions
-
-from .models import User
-
-import jwt
+from .decode import decode_jwt_token
 
 
 class JWTAuthentication(authentication.BaseAuthentication):
@@ -42,30 +38,23 @@ class JWTAuthentication(authentication.BaseAuthentication):
             token = auth_header[1].decode('utf-8')
 
             # check prefix
-            if prefix.lower() != auth_header_prefix:
+            if prefix.lower() != auth_header_prefix.lower():
                 return None
 
-            return self._validate_token(request, token)
+            else:
+                return self._validate_token(request, token)
 
-    def _validate_token(self, request, token):
+    @staticmethod
+    def _validate_token(request, token):
         """
         Private method for checking token's validity
         """
-        # decode token
-        try:
-            payload = jwt.decode(token, settings.SECRET_KEY)
+        decoded = decode_jwt_token(token)
 
-        except Exception:
+        # reject any non-access tokens
+        if decoded["token_type"] != "access":
             raise exceptions.AuthenticationFailed(
-                "Authentication is non-performable on this token.")
-
-        # find user
-        try:
-            user = User.objects.get(id=payload['id'])
-
-        except User.DoesNotExist:
-            raise exceptions.AuthenticationFailed(
-                "Cannot identify any user by this token."
+                "Authentication cannot be performed on non-access tokens"
             )
 
-        return user, token
+        return decoded["user"], token

@@ -1,4 +1,4 @@
-from rest_framework import status
+from rest_framework import status, exceptions
 
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -7,6 +7,7 @@ from rest_framework.views import APIView
 from drf_yasg.utils import swagger_auto_schema
 
 from .serializers import RegistrationSerializer, LoginSerializer
+from .decode import decode_jwt_token
 from .docs import EndpointDocs
 
 
@@ -46,3 +47,30 @@ class LoginAPIView(APIView):
         serializer.is_valid(raise_exception=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class RefreshAPIView(APIView):
+
+    @staticmethod
+    @swagger_auto_schema(**EndpointDocs.REFRESH)
+    def post(request):
+        """
+        Validate refresh token that is in json body
+        """
+
+        data = request.data
+        decoded = decode_jwt_token(data["refresh_token"])
+
+        if decoded["token_type"] != "refresh":
+            raise exceptions.AuthenticationFailed(
+                "This is not a refresh token"
+            )
+
+        else:
+            user = decoded["user"]
+            return Response({
+                    "token": user.token,
+                    "refresh_token": user.refresh_token
+                },
+                status=status.HTTP_200_OK
+            )

@@ -34,5 +34,3 @@ class CustomUserManager(BaseUserManager):
 
         user.save()
         return user
-
-
